@@ -10,14 +10,10 @@
 import marimo
 
 __generated_with = "0.23.9"
-app = marimo.App(
-    width="medium",
-    # css_file="/usr/local/_marimo/custom.css",
-    auto_download=["html"],
-)
+app = marimo.App(width="medium", auto_download=["html"])
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _():
     import base64
     import io
@@ -42,7 +38,7 @@ def _():
     )
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     dropdown = mo.ui.dropdown(
         options=["Expected Improvement", "Log Expected Improvement"],
@@ -110,7 +106,7 @@ def _(base64, io, np):
     return (decode_npz_payload,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(decode_npz_payload, mo):
     @mo.cache
     def load_data(acq_function: str = "Expected Improvement"):
@@ -138,7 +134,7 @@ def _(decode_npz_payload, mo):
     return (load_data,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(np):
     def limit_colorbar_ticks(colorbar, max_ticks: int = 4) -> None:
         """Limit colorbar labels to a small readable count."""
@@ -159,7 +155,7 @@ def _(np):
     return (limit_colorbar_ticks,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(FormatStrFormatter, N_initial, colormaps, limit_colorbar_ticks, np):
     def plot_surrogate_predictions(data, bo_iteration, fig, ax):
 
@@ -209,7 +205,7 @@ def _(FormatStrFormatter, N_initial, colormaps, limit_colorbar_ticks, np):
     return (plot_surrogate_predictions,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(FormatStrFormatter, N_initial, limit_colorbar_ticks, np):
     def plot_acqf(data, bo_iteration, fig, ax):
 
@@ -219,7 +215,9 @@ def _(FormatStrFormatter, N_initial, limit_colorbar_ticks, np):
         levels_acqf = np.linspace(Z_acqf.min(), Z_acqf.max(), 20)
 
         cb_acqf = ax.contourf(X_acqf, Y_acqf, Z_acqf, levels=levels_acqf)
-        cbar_acqf = fig.colorbar(cb_acqf, ax=ax, format=FormatStrFormatter("%6.2f"))
+        cbar_acqf = fig.colorbar(
+            cb_acqf, ax=ax, format=FormatStrFormatter("%6.2f")
+        )
         limit_colorbar_ticks(cbar_acqf)
 
         ax.scatter(
@@ -245,13 +243,13 @@ def _(FormatStrFormatter, N_initial, limit_colorbar_ticks, np):
         )
         ax.set(xlabel="x", ylabel="y", title="Acquisition Function")
         # ax.yaxis.set_major_formatter(FormatStrFormatter("%6.2f"))
-
     return (plot_acqf,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(FormatStrFormatter, MaxNLocator, N_initial, data, np):
     min_values_norm = np.minimum.accumulate(data["values_norm"])
+
 
     def plot_minimum_over_time(data, bo_iteration: int, ax) -> None:
 
@@ -289,7 +287,7 @@ def _(io, mo):
     return (convert_fig_to_html,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(
     Figure,
     GridSpec,
@@ -333,11 +331,6 @@ def _(
         return html
 
     return (plot_data,)
-
-
-@app.cell
-def _():
-    return
 
 
 if __name__ == "__main__":
