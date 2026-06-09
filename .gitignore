@@ -10,3 +10,5 @@ wheels/
 .venv
 *.npz
 *.h5
+output_dir/**
+.DS_Store

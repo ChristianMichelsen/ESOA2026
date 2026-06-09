@@ -12,22 +12,22 @@ import marimo
 __generated_with = "0.23.9"
 app = marimo.App(
     width="medium",
-    css_file="/usr/local/_marimo/custom.css",
+    # css_file="/usr/local/_marimo/custom.css",
     auto_download=["html"],
 )
 
 
 @app.cell
 def _():
-    import numpy as np
-    from matplotlib.gridspec import GridSpec
-    from matplotlib.ticker import FormatStrFormatter, MaxNLocator
-    from matplotlib.figure import Figure
-    from matplotlib import colormaps
-    import matplotlib.pyplot as plt
-    import marimo as mo
     import base64
     import io
+
+    import marimo as mo
+    import numpy as np
+    from matplotlib import colormaps
+    from matplotlib.figure import Figure
+    from matplotlib.gridspec import GridSpec
+    from matplotlib.ticker import FormatStrFormatter, MaxNLocator
 
     return (
         Figure,
@@ -169,7 +169,7 @@ def _(FormatStrFormatter, N_initial, colormaps, limit_colorbar_ticks, np):
         surrogate_range = (data["grid_norm"].min(), data["grid_norm"].max())
         surrogate_levels = np.linspace(surrogate_range[0], surrogate_range[1], 50)
 
-        cmap_reversed = colormaps.get_cmap('viridis_r')
+        cmap_reversed = colormaps.get_cmap("viridis_r")
 
         ax.scatter(
             data["sites"][0, : N_initial + bo_iteration + 1][:N_initial],
@@ -177,7 +177,7 @@ def _(FormatStrFormatter, N_initial, colormaps, limit_colorbar_ticks, np):
             color="grey",
             marker=".",
             zorder=5,
-            label="Initial"
+            label="Initial",
         )
         ax.scatter(
             data["sites"][0, : N_initial + bo_iteration + 1][N_initial:-1],
@@ -185,7 +185,7 @@ def _(FormatStrFormatter, N_initial, colormaps, limit_colorbar_ticks, np):
             color="black",
             marker="*",
             zorder=10,
-            label="BO"
+            label="BO",
         )
         ax.scatter(
             data["sites"][0, : N_initial + bo_iteration + 1][-1:],
@@ -193,7 +193,7 @@ def _(FormatStrFormatter, N_initial, colormaps, limit_colorbar_ticks, np):
             color="red",
             marker="o",
             zorder=11,
-            label="Next"
+            label="Next",
         )
         ax.set(xlabel="x", ylabel="y", title="Surrogate Predictions")
         cb_pred = ax.contourf(
@@ -219,9 +219,7 @@ def _(FormatStrFormatter, N_initial, limit_colorbar_ticks, np):
         levels_acqf = np.linspace(Z_acqf.min(), Z_acqf.max(), 20)
 
         cb_acqf = ax.contourf(X_acqf, Y_acqf, Z_acqf, levels=levels_acqf)
-        cbar_acqf = fig.colorbar(
-            cb_acqf, ax=ax, format=FormatStrFormatter("%6.2f")
-        )
+        cbar_acqf = fig.colorbar(cb_acqf, ax=ax, format=FormatStrFormatter("%6.2f"))
         limit_colorbar_ticks(cbar_acqf)
 
         ax.scatter(
@@ -247,6 +245,7 @@ def _(FormatStrFormatter, N_initial, limit_colorbar_ticks, np):
         )
         ax.set(xlabel="x", ylabel="y", title="Acquisition Function")
         # ax.yaxis.set_major_formatter(FormatStrFormatter("%6.2f"))
+
     return (plot_acqf,)
 
 
@@ -256,14 +255,14 @@ def _(FormatStrFormatter, MaxNLocator, N_initial, data, np):
 
     def plot_minimum_over_time(data, bo_iteration: int, ax) -> None:
 
-        min_values_bo_iteration = min_values_norm[:N_initial+bo_iteration]
+        min_values_bo_iteration = min_values_norm[: N_initial + bo_iteration]
         best_value = min_values_bo_iteration[-1]
         best_index = np.argmin(min_values_bo_iteration) - N_initial + 1 + 1
-        iteration_indices = np.arange(bo_iteration+1) + 1
-    
+        iteration_indices = np.arange(bo_iteration + 1) + 1
+
         ax.step(
             iteration_indices,
-            min_values_norm[N_initial-1:N_initial+bo_iteration],
+            min_values_norm[N_initial - 1 : N_initial + bo_iteration],
             where="post",
             color="C0",
             linewidth=2,
