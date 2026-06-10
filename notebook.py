@@ -4,6 +4,7 @@
 #     "marimo>=0.23.3",
 #     "matplotlib==3.10.9",
 #     "numpy==2.4.6",
+#     "plotly==6.8.0",
 # ]
 # ///
 
@@ -25,9 +26,12 @@ def _():
     import marimo as mo
     import numpy as np
     from matplotlib import colormaps
+    import matplotlib.pyplot as plt
+    from matplotlib.colors import LogNorm
     from matplotlib.figure import Figure
     from matplotlib.gridspec import GridSpec
     from matplotlib.ticker import FormatStrFormatter, MaxNLocator
+    import plotly.graph_objects as go
 
     return (
         Figure,
