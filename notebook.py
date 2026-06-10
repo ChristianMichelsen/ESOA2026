@@ -10,7 +10,11 @@
 import marimo
 
 __generated_with = "0.23.9"
-app = marimo.App(width="medium", auto_download=["html"])
+app = marimo.App(
+    width="medium",
+    layout_file="layouts/notebook.grid.json",
+    auto_download=["html"],
+)
 
 
 @app.cell(hide_code=True)
@@ -331,6 +335,21 @@ def _(
         return html
 
     return (plot_data,)
+
+
+@app.cell(hide_code=True)
+def _(N_BO, plot_data):
+    is_initial_run = True
+    if is_initial_run:
+        for i in range(1, N_BO):
+            plot_data(i)
+        is_initial_run = False
+    return
+
+
+@app.cell
+def _():
+    return
 
 
 if __name__ == "__main__":
