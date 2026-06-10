@@ -10,7 +10,7 @@
 
 import marimo
 
-__generated_with = "0.23.9"
+__generated_with = "0.23.6"
 app = marimo.App(
     width="medium",
     layout_file="layouts/notebook.grid.json",
@@ -24,14 +24,14 @@ def _():
     import io
 
     import marimo as mo
-    import numpy as np
-    from matplotlib import colormaps
     import matplotlib.pyplot as plt
+    import numpy as np
+    import plotly.graph_objects as go
+    from matplotlib import colormaps
     from matplotlib.colors import LogNorm
     from matplotlib.figure import Figure
     from matplotlib.gridspec import GridSpec
     from matplotlib.ticker import FormatStrFormatter, MaxNLocator
-    import plotly.graph_objects as go
 
     return (
         Figure,
@@ -223,9 +223,7 @@ def _(FormatStrFormatter, N_initial, limit_colorbar_ticks, np):
         levels_acqf = np.linspace(Z_acqf.min(), Z_acqf.max(), 20)
 
         cb_acqf = ax.contourf(X_acqf, Y_acqf, Z_acqf, levels=levels_acqf)
-        cbar_acqf = fig.colorbar(
-            cb_acqf, ax=ax, format=FormatStrFormatter("%6.2f")
-        )
+        cbar_acqf = fig.colorbar(cb_acqf, ax=ax, format=FormatStrFormatter("%6.2f"))
         limit_colorbar_ticks(cbar_acqf)
 
         ax.scatter(
