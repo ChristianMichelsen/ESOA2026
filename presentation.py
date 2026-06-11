@@ -20,17 +20,9 @@ app = marimo.App(
 
 @app.cell(hide_code=True)
 def _():
-    import base64
-    import io
 
     import marimo as mo
     import numpy as np
-    from matplotlib import colormaps
-    import matplotlib.pyplot as plt
-    from matplotlib.colors import LogNorm
-    from matplotlib.figure import Figure
-    from matplotlib.gridspec import GridSpec
-    from matplotlib.ticker import FormatStrFormatter, MaxNLocator
     import plotly.graph_objects as go
 
     return go, mo, np
@@ -66,7 +58,7 @@ def _(go, mo, np):
         Z = himmelblau(X, Y)
         Z_log = np.log10(Z)
 
-        size = 600
+        size = 500
 
         fig_surface = go.Figure(
             data=[
@@ -114,7 +106,6 @@ def _(go, mo, np):
         )
 
         return mo.hstack([fig_surface, fig_heatmap], widths="equal")
-
 
     plot_himmelblau()
     return
